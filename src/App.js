@@ -47,8 +47,6 @@ function App() {
     return "./images/" + url;
   };
 
-
-
   const sortBig = () => setCards([...cards].sort((a, b) => a.price - b.price));
   const sortSmall = () => setCards([...cards].sort((a, b) => b.price - a.price));
   const sortAbc = () => setCards([...cards].sort((a, b) => a.name.localeCompare(b.name)));
