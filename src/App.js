@@ -5,29 +5,71 @@ import 'bulma/css/bulma.css';
 import {BrowserRouter as Router, Switch, Route, Redirect, NavLink} from "react-router-dom";
 import {NavBar} from './components/NavBar/NavBar';
 import data from './api/api.json';
-import img from './images/1.jpg';
+import img from './api/images/1.jpg';
 import {Form} from "./components/Form/Form";
 import {SideBar} from "./components/SideBar/SideBar";
 import {Footer} from "./components/Footer/Footer";
+import one from './api/images/1.jpg';
+import two from './api/images/2.jpg';
+import three from './api/images/3.jpg';
+import four from './api/images/4.jpg';
+import fifth from './api/images/5.jpg';
+import six from './api/images/6.jpg';
+import seven from './api/images/7.jpg';
+import eight from './api/images/8.jpg';
+import nine from './api/images/9.jpg';
+import ten from './api/images/10.jpg';
+import {CardList} from "./components/CardLIst/CardList";
 
 function App() {
   const [cards, setCards] = useState(data.products);
-  const [queryFrom, setQueryFrom] = useState('');
-  const [queryTo, setQueryTo] = useState('');
+  const [category, setCategory] = useState('all')
+  const [min, setMin] = useState('');
+  const [max, setMax] = useState('');
 
   // localStorage
-  // useEffect(() => {
-  //   const saved = JSON.parse(localStorage.getItem('cards') || '[]');
-  //
-  //   setCards(saved);
-  // }, []);
-  //
-  // useEffect(() => {
-  //   localStorage.setItem('cards', JSON.stringify(cards));
-  // }, [cards]);
+  useEffect(() => {
+    const saveCards = localStorage.getItem('cards');
 
-  const changeInputFromHandler = (e) => setQueryFrom(e.target.value);
-  const changeInputToHandler = (e) => setQueryTo(e.target.value);
+    if (saveCards) {
+      setCards(JSON.parse(saveCards));
+    }
+  }, []);
+  useEffect(() => {
+    localStorage.setItem('cards', JSON.stringify(cards));
+  }, [cards]);
+
+  const handleFilterChange = (e, filterType) => {
+    switch (filterType) {
+      case 'min':
+        setMin(e.target.value);
+        break;
+      case 'max':
+        setMax(e.target.value);
+        break;
+      default: break;
+    }
+  };
+
+  useEffect(() => {
+    let filteredProducts = data.products;
+
+    if (min !== '') {
+      filteredProducts = filteredProducts.filter(p => p.price > min);
+    }
+    if (max !== '') {
+      filteredProducts = filteredProducts.filter(p => p.price < max);
+    }
+
+    setCards(filteredProducts);
+  }, [min, max]);
+
+  // const changeInputToHandler = (e) => {
+  //   setMax(e.target.value)
+  //   console.log(max)
+  // };
+
+  // const filteredCards = [...cards].filter(c => c > queryMin && c < queryMax);
 
   const addHandler = (name, price, image, description) => {
     const newCard = {
@@ -41,14 +83,8 @@ function App() {
     setCards(prev => [newCard, ...prev])
   };
 
-  console.log(cards);
-
-  const getImageURI = (url) => {
-    return "./images/" + url;
-  };
-
-  const sortBig = () => setCards([...cards].sort((a, b) => a.price - b.price));
-  const sortSmall = () => setCards([...cards].sort((a, b) => b.price - a.price));
+  const sortSmall = () => setCards([...cards].sort((a, b) => a.price - b.price));
+  const sortBig = () => setCards([...cards].sort((a, b) => b.price - a.price));
   const sortAbc = () => setCards([...cards].sort((a, b) => a.name.localeCompare(b.name)));
 
   return (
@@ -57,7 +93,7 @@ function App() {
         <NavBar/>
 
         <div className="columns outline">
-          <div className="column is-3 lightgray-line side-bar">
+          <div className="column is-3 box-shadow side-bar">
 
             <div className="sidenav-item">
               <p className="title is-4 mb0">Цена</p>
@@ -65,12 +101,23 @@ function App() {
               <div className="flex">
                 <div className="control column is-one-fifths">
                   <p>from</p>
-                  <input className="input" type="number" placeholder="1999"/>
+                  <input
+                    value={min}
+                    onChange={(e) => handleFilterChange(e, 'min')}
+                    className="input is-primary"
+                    type="number"
+                    placeholder="1999"
+                  />
                 </div>
-
                 <div className="control column is-one-fifths">
                   <p>to</p>
-                  <input className="input" type="number" placeholder="29999"/>
+                  <input
+                    value={max}
+                    onChange={(e) => handleFilterChange(e, 'max')}
+                    className="input is-primary"
+                    type="number"
+                    placeholder="29999"
+                  />
                 </div>
               </div>
             </div>
@@ -79,7 +126,7 @@ function App() {
               <p className="title is-4 mb-3">Валюта</p>
               <div className="flex">
                 <button className="button is-primary is-outlined btn-left">USD</button>
-                <button className="button is-success is-outlined btn-right">UAN</button>
+                <button className="button is-success is-outlined btn-right">UAH</button>
               </div>
             </div>
 
@@ -106,27 +153,9 @@ function App() {
             <Form onAdd={addHandler} />
 
           </div>
-          <div className="column main-scroll lightgray-line">
-            <ul className="cards">
-              {cards.map(card => (
-                <li className="cards_item">
-                  <div className="card">
-                    <div className="card_image">
-                      <img src={getImageURI(card.image)} />
-                    </div>
-                    <div className="card_content">
-                      <h2 className="card_title">{card.name}</h2>
-                      <h2 className="card_price">{card.price}</h2>
-                      <p className="card_text">{`${(card.description).slice(0, 120)} ...`}</p>
-                      <div className="has-text-centered">
-                        <button className="button is-primary is-outlined">Outlined</button>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+
+          <CardList cards={cards} />
+
         </div>
 
         {/*<Footer />*/}

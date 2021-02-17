@@ -6,9 +6,7 @@ export const NavBar = () => {
     <>
       <nav className="navbar box-shadow" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-          <NavLink to="/" className="navbar-item" href="">
-            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"/>
-          </NavLink>
+          <NavLink to="/" className="navbar-item" href="">LOGO</NavLink>
 
           <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"/>
