@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import './Card.scss';
-import img from "../../../api/images/1.jpg";
+import img from "../../../images/1.jpg";
 import {Modal} from '../../Modal/Modal';
 
 export const Card = ({card}) => {
@@ -11,9 +11,7 @@ export const Card = ({card}) => {
       <li className="column is-4 is-offset-1">
         <div className="card">
           <div className="card__container-image">
-            <img src={`../../api/images/${card.image}`} />
-            {/*<img src={require(`../../../images/${card.image}`)} alt="f"/>*/}
-            {/*<img className="card__image" src="https://images.unsplash.com/photo-1600588545434-1bcc100f7d58?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80" alt=""/>*/}
+            <img className="card__image" src={`https://layrovell.github.io/shop/images/${card.image}`} alt="adsa" />
           </div>
           <div className="card__content">
             <h2 className="card__title">{card.name}</h2>
@@ -42,8 +40,7 @@ export const Card = ({card}) => {
           card={card}
         >
           <div className="intro">
-            {/*<img className="intro__img" src="https://images.unsplash.com/photo-1600588545434-1bcc100f7d58?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80" alt="char image"/>*/}
-            <img src={`../../images/${card.image}`} alt=""/>
+            <img className="card__image--intro" src={`https://layrovell.github.io/shop/images/${card.image}`} alt=""/>
             <div className="intro__content">
               <p className="intro__name">{card.name}</p>
               <hr/>

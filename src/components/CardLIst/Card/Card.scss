@@ -12,9 +12,15 @@
   }
 
   &__image {
-    width: 100%;
-    height: auto;
+    height: 200px !important;
+    width: auto !important;
     object-fit: cover;
+
+    &--intro {
+      margin: 0 auto;
+      width: 200px !important;
+      height: auto !important;
+    }
   }
 
   &__content {
@@ -37,7 +43,6 @@
 
   &__money {
     font-weight: normal;
-
   }
 
   &__text {

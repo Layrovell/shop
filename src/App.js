@@ -5,20 +5,8 @@ import 'bulma/css/bulma.css';
 import {BrowserRouter as Router, Switch, Route, Redirect, NavLink} from "react-router-dom";
 import {NavBar} from './components/NavBar/NavBar';
 import data from './api/api.json';
-import img from './api/images/1.jpg';
+import img from './images/1.jpg';
 import {Form} from "./components/Form/Form";
-import {SideBar} from "./components/SideBar/SideBar";
-import {Footer} from "./components/Footer/Footer";
-import one from './api/images/1.jpg';
-import two from './api/images/2.jpg';
-import three from './api/images/3.jpg';
-import four from './api/images/4.jpg';
-import fifth from './api/images/5.jpg';
-import six from './api/images/6.jpg';
-import seven from './api/images/7.jpg';
-import eight from './api/images/8.jpg';
-import nine from './api/images/9.jpg';
-import ten from './api/images/10.jpg';
 import {CardList} from "./components/CardLIst/CardList";
 
 function App() {
@@ -26,6 +14,8 @@ function App() {
   const [category, setCategory] = useState('all')
   const [min, setMin] = useState('');
   const [max, setMax] = useState('');
+
+  console.log(cards);
 
   // localStorage
   useEffect(() => {
@@ -64,20 +54,13 @@ function App() {
     setCards(filteredProducts);
   }, [min, max]);
 
-  // const changeInputToHandler = (e) => {
-  //   setMax(e.target.value)
-  //   console.log(max)
-  // };
-
-  // const filteredCards = [...cards].filter(c => c > queryMin && c < queryMax);
-
   const addHandler = (name, price, image, description) => {
     const newCard = {
       id: Date.now(),
-      name: name,
-      price: price,
-      image: image,
-      description: description,
+      name,
+      price,
+      image,
+      description,
     }
 
     setCards(prev => [newCard, ...prev])
