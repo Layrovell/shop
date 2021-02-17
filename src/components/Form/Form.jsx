@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-export const Form = ({onAdd}) => {
+export const Form = ({ onAdd }) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
@@ -16,13 +16,16 @@ export const Form = ({onAdd}) => {
     setName('');
     setPrice('');
     setDescription('');
-
+    setImage('');
   }
 
-  const qqq = () => {
-    console.log('add');
+  const handleUpload = (e) => {
+    setImage(e.target.files[0]);
   }
 
+  const ImageThumb = ({ image }) => {
+    return <img src={URL.createObjectURL(image)} alt={image.name} />;
+  };
 
   return (
     <div className="row sidebar form-sub">
@@ -30,7 +33,7 @@ export const Form = ({onAdd}) => {
       <div className="col s6">
         <div>
 
-          <div className="field is-horizontal">
+          <div className="field is-horizontal is-absolute">
             <div className="field-label is-normal">
               <label className="label">Имя</label>
             </div>
@@ -49,7 +52,7 @@ export const Form = ({onAdd}) => {
             </div>
           </div>
 
-          <div className="field is-horizontal">
+          <div className="field is-horizontal is-absolute">
             <div className="field-label is-normal">
               <label className="label">Цена</label>
             </div>
@@ -76,12 +79,13 @@ export const Form = ({onAdd}) => {
               <div className="file">
                 <label className="file-label">
                   <input
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
+                    image={image}
+                    onChange={handleUpload}
                     className="file-input"
                     type="file"
                     name="resume"
                   />
+                  {image && <ImageThumb image={image} />}
                   <span className="file-cta">
                     <span className="file-icon">
                       <i className="fas fa-upload"/>
@@ -106,7 +110,6 @@ export const Form = ({onAdd}) => {
                     onChange={(e) => setDescription(e.target.value)}
                     className="textarea is-primary"
                     placeholder="Description"
-                    onresize="none"
                   />
                 </p>
               </div>
@@ -118,7 +121,9 @@ export const Form = ({onAdd}) => {
               className="button is-success"
               onClick={addHandler}
             >
-              <span className="icon is-small"><i className="fas fa-check"/></span>
+              <span className="icon is-small">
+                <i className="fas fa-check"/>
+              </span>
               <span>Save</span>
             </button>
           </div>
